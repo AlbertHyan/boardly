@@ -105,9 +105,9 @@ export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoard
 
     return (
         <main className="todo-boards-container">
-            <h2>TODO Borads {todoBoards.length}</h2>
+            <h2>Your Boards {todoBoards.length}</h2>
 
-            <input type="serach" 
+            <input type="search" 
                 value={searchTerm}
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Search Board..."
