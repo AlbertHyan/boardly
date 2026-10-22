@@ -15,7 +15,7 @@ export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoard
         board.title.toLowerCase().includes(debouncedSearch.toLowerCase())
     );
 
-    document.title = `TODO Boards [ ${todoBoards.length} ]`;
+    document.title = `Boards [ ${todoBoards.length} ] | Boardly`;
 
     function hslToHex(h, s, l) {
         s /= 100;
