@@ -13,40 +13,40 @@ function App() {
                 title: "Project “New Product Launch”", 
                 color: "#76ce12",
                 todos: [
-                    { text: "Conduct market research.", color: "#76ce1280", date: "01.11.24", currentTime: 1730841459567 },
-                    { text: "Develop a prototype.", color: "#76ce1260", date: "02.11.24", currentTime: 1730841511550 },
-                    { text: "Plan an advertising campaign.", color: "#76ce1240", date: "03.11.24", currentTime: 1730841530406 },
-                    { text: "Prepare for the product presentation.", color: "#76ce1220", date: "04.11.24", currentTime: 1730841589676 },
+                    { text: "Conduct market research.", color: "#76ce1280", date: "01.11.26", currentTime: 1730841459567 },
+                    { text: "Develop a prototype.", color: "#76ce1260", date: "02.11.26", currentTime: 1730841511550 },
+                    { text: "Plan an advertising campaign.", color: "#76ce1240", date: "03.11.26", currentTime: 1730841530406 },
+                    { text: "Prepare for the product presentation.", color: "#76ce1220", date: "04.11.26", currentTime: 1730841589676 },
                 ] 
             }, 
             { 
                 title: "Personal Development and Education", 
                 color: "#ceb512", 
                 todos: [
-                    { text: "Read a book on personal growth.", color: "#ceb51280", date: "01.11.24", currentTime: 1730841459567 },
-                    { text: "Complete an online course on new skills.", color: "#ceb51260", date: "02.11.24", currentTime: 1730841511550 },
-                    { text: "Attend a webinar.", color: "#ceb51240", date: "03.11.24", currentTime: 1730841530406 },
-                    { text: "Write a reflection on the learned materials.", color: "#ceb51220", date: "04.11.24", currentTime: 1730841589676 },
+                    { text: "Read a book on personal growth.", color: "#ceb51280", date: "01.11.26", currentTime: 1730841459567 },
+                    { text: "Complete an online course on new skills.", color: "#ceb51260", date: "02.11.26", currentTime: 1730841511550 },
+                    { text: "Attend a webinar.", color: "#ceb51240", date: "03.11.26", currentTime: 1730841530406 },
+                    { text: "Write a reflection on the learned materials.", color: "#ceb51220", date: "04.11.26", currentTime: 1730841589676 },
                 ]
             }, 
             { 
                 title: "Team Project “Company Rebranding”",
                 color: "#12ce86", 
                 todos: [
-                    { text: "Analyze the current brand.", color: "#12ce8680", date: "01.11.24", currentTime: 1730841459567 }, 
-                    { text: "Create new logos and slogans.", color: "#12ce8660", date: "02.11.24", currentTime: 1730841511550 }, 
-                    { text: "Review designs with the team.", color: "#12ce8640", date: "03.11.24", currentTime: 1730841530406 }, 
-                    { text: "Prepare materials for the rebranding launch.", color: "#12ce8620", date: "04.11.24", currentTime: 1730841589676 }, 
+                    { text: "Analyze the current brand.", color: "#12ce8680", date: "01.11.26", currentTime: 1730841459567 }, 
+                    { text: "Create new logos and slogans.", color: "#12ce8660", date: "02.11.26", currentTime: 1730841511550 }, 
+                    { text: "Review designs with the team.", color: "#12ce8640", date: "03.11.26", currentTime: 1730841530406 }, 
+                    { text: "Prepare materials for the rebranding launch.", color: "#12ce8620", date: "04.11.26", currentTime: 1730841589676 }, 
                 ]
             }, 
             {   
                 title: "Personal Project “Travel Planning”",
                 color: "#12cecb", 
                 todos: [
-                    { text: "Choose a destination and travel dates.", color: "#12cecb80", date: "01.11.24", currentTime: 1730841459567 },
-                    { text: "Book tickets and accommodation.", color: "#12cecb60", date: "02.11.24", currentTime: 1730841511550 },
-                    { text: "Make a list of places to visit.", color: "#12cecb40", date: "03.11.24", currentTime: 1730841530406 },
-                    { text: "Prepare documents and luggage.", color: "#12cecb20", date: "04.11.24", currentTime: 1730841589676 },
+                    { text: "Choose a destination and travel dates.", color: "#12cecb80", date: "01.11.26", currentTime: 1730841459567 },
+                    { text: "Book tickets and accommodation.", color: "#12cecb60", date: "02.11.26", currentTime: 1730841511550 },
+                    { text: "Make a list of places to visit.", color: "#12cecb40", date: "03.11.26", currentTime: 1730841530406 },
+                    { text: "Prepare documents and luggage.", color: "#12cecb20", date: "04.11.26", currentTime: 1730841589676 },
                 ] 
             }
         ];
