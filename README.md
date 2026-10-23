@@ -3,7 +3,7 @@
 Boardly is a user-friendly, minimalist platform built as a frontend application using vanilla React from scratch, without the help of external libraries. 
 This project showcases my ability to create a React application from the ground up.
 
-![Boardly Screenshot](./src/assets/boardly-screenshot.png)
+<img src="./public/boardly-screenshot.png" alt="Boardly Screenshot" style="border-radius: 1rem;">
 
 ## Application Overview
 Boardly allows you to create customizable boards where you can:
