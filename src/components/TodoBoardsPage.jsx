@@ -112,6 +112,7 @@ export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoard
                 onChange={e => setSearchTerm(e.target.value)}
                 placeholder="Search Board..."
                 className="search-input"
+                id="search-input"
             />
 
             <div className="boards-grid">
