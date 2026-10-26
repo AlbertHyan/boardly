@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 
 
 export default function RecentTodoCards(props) {
-
     const { todoBoards } = props;
 
     // Flatten todos from all boards into a single array
