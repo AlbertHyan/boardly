@@ -95,13 +95,12 @@ function App() {
     console.log("Data reset to default.");
   }
 
-  const todos = selectedBoardIndex !== null
-    ? todoBoards[selectedBoardIndex].todos
-    : [];
+  const currentBoard = selectedBoardIndex !== null && todoBoards[selectedBoardIndex]
+    ? todoBoards[selectedBoardIndex] 
+    : null;
 
-  const todoBoardTitle = selectedBoardIndex !== null
-    ? todoBoards[selectedBoardIndex].title
-    : "Empty Board Title";
+  const todos = currentBoard ? currentBoard.todos : [];
+  const todoBoardTitle = currentBoard ? currentBoard.title : "Empty Board Title";
 
   return (
     <>
