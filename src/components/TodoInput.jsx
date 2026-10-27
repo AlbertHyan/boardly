@@ -10,7 +10,7 @@ export default function TodoInput(props) {
         textareaHeight,
         setTextareaHeight,
 
-        todoBoardTitle,
+        BoardViewTitle,
         onTitleChange
     } = props;
     const [isButtonActive, setIsButtonActive] = useState(false);
@@ -59,11 +59,11 @@ export default function TodoInput(props) {
         }
     };
 
-    const [todoBoardTitleValue, setTodoBoardTitleValue] = useState(todoBoardTitle);
+    const [BoardViewTitleValue, setBoardViewTitleValue] = useState(BoardViewTitle);
 
     const handleTitleChange = (event) => {
         const newTitle = event.target.value;
-        setTodoBoardTitleValue(newTitle);
+        setBoardViewTitleValue(newTitle);
         onTitleChange(newTitle);  // Update title in parent component
     };
 
@@ -72,7 +72,7 @@ export default function TodoInput(props) {
             <input className="boardTitleInput container"
                 maxLength="42"
                 type="text" 
-                value={todoBoardTitleValue} 
+                value={BoardViewTitleValue} 
                 onChange={handleTitleChange}
                 placeholder="TODO Title" 
             />

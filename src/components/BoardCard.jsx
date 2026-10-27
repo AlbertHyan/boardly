@@ -1,4 +1,4 @@
-export default function TodoCard(props) {
+export default function BoardCard(props) {
 
     const { 
         children, // todo

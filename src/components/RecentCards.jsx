@@ -1,11 +1,11 @@
 import { useEffect } from "react";
 
 
-export default function RecentTodoCards(props) {
-    const { todoBoards } = props;
+export default function RecentBoardCards(props) {
+    const { BoardViews } = props;
 
     // Flatten todos from all boards into a single array
-    const allTodos = todoBoards.reduce((acc, board) => {
+    const allTodos = BoardViews.reduce((acc, board) => {
         return acc.concat(board.todos.map(todo => ({
             ...todo
         })));

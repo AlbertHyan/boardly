@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import TodoBoardsPage from "./components/TodoBoardsPage.jsx";
-import TodoBoard from "./components/TodoBoard.jsx";
-import RecentTodoCards from "./components/RecentTodoCards.jsx";
+import BoardsPage from "./components/BoardsPage.jsx";
+import BoardView from "./components/BoardView.jsx";
+import RecentCards from "./components/RecentCards.jsx";
 
 
 const DEFAULT_BOARDS = [
@@ -49,12 +49,12 @@ const DEFAULT_BOARDS = [
 
 
 function App() {
-  // Load todoBoards from localStorage when the component mounts
-  const [todoBoards, setTodoBoards] = useState(() => {
+  // Load BoardViews from localStorage when the component mounts
+  const [BoardViews, setBoardViews] = useState(() => {
     try {
-      const savedTodoBoards = localStorage.getItem('todoBoards');
-      console.log(savedTodoBoards);  // show localTodoBoards
-      return savedTodoBoards ? JSON.parse(savedTodoBoards) : DEFAULT_BOARDS;
+      const savedBoardViews = localStorage.getItem('BoardViews');
+      console.log(savedBoardViews);  // show localBoardViews
+      return savedBoardViews ? JSON.parse(savedBoardViews) : DEFAULT_BOARDS;
     } catch (error) {
       console.error("Failed to parse Boards from localStorage", error);
       return DEFAULT_BOARDS;
@@ -63,18 +63,18 @@ function App() {
 
   const [selectedBoardIndex, setSelectedBoardIndex] = useState(null);
 
-  // Save todoBoards to localStorage whenever they change
+  // Save BoardViews to localStorage whenever they change
   useEffect(() => {
     try {
-      localStorage.setItem("todoBoards", JSON.stringify(todoBoards));
+      localStorage.setItem("BoardViews", JSON.stringify(BoardViews));
     } catch (error) {
       console.error("Failed to save Boards to localStorage", error);
     }
-  }, [todoBoards]);
+  }, [BoardViews]);
 
   // Change title in Board
   const handleTitleChange = (index, newTitle) => {
-    setTodoBoards(prevBoards =>
+    setBoardViews(prevBoards =>
       prevBoards.map((board, i) =>
         i === index ? { ...board, title: newTitle } : board
       )
@@ -89,30 +89,30 @@ function App() {
     const confirmationBeforeDeletion = window.confirm("I understand and want to delete my data.")
     if (!confirmationBeforeDeletion) return;
     
-    localStorage.removeItem("todoBoards");
-    setTodoBoards(DEFAULT_BOARDS);
+    localStorage.removeItem("BoardViews");
+    setBoardViews(DEFAULT_BOARDS);
     setSelectedBoardIndex(null);  // Return the user to the main screen
     console.log("Data reset to default.");
   }
 
-  const currentBoard = selectedBoardIndex !== null && todoBoards[selectedBoardIndex]
-    ? todoBoards[selectedBoardIndex] 
+  const currentBoard = selectedBoardIndex !== null && BoardViews[selectedBoardIndex]
+    ? BoardViews[selectedBoardIndex] 
     : null;
 
   const todos = currentBoard ? currentBoard.todos : [];
-  const todoBoardTitle = currentBoard ? currentBoard.title : "Empty Board Title";
+  const BoardViewTitle = currentBoard ? currentBoard.title : "Empty Board Title";
 
   return (
     <>
       {selectedBoardIndex === null ? (
         <>
-          <TodoBoardsPage
+          <BoardsPage
             onSelectBoard={setSelectedBoardIndex}
-            todoBoards={todoBoards} 
-            setTodoBoards={setTodoBoards}
+            BoardViews={BoardViews} 
+            setBoardViews={setBoardViews}
           />
-          <RecentTodoCards
-            todoBoards={todoBoards}
+          <RecentCards
+            BoardViews={BoardViews}
           />
           <button className="reset-btn"
             onClick={handleDeleteLocalStorage}
@@ -121,12 +121,12 @@ function App() {
           </button>
         </>
       ) : (
-        <TodoBoard
+        <BoardView
           boardIndex={selectedBoardIndex}
           todos={todos}
           onBack={() => setSelectedBoardIndex(null)}
-          setTodoBoards={setTodoBoards}
-          todoBoardTitle={todoBoardTitle}
+          setBoardViews={setBoardViews}
+          BoardViewTitle={BoardViewTitle}
           onTitleChange={(newTitle) => handleTitleChange(selectedBoardIndex, newTitle)}
         />
       )}

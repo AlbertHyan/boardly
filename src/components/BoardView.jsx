@@ -1,27 +1,27 @@
 import { useState, useEffect } from "react";
 import TodoInput from "./TodoInput.jsx";
-import TodoList from "./TodoList";
+import CardList from "./CardList.jsx";
 
-export default function TodoBoard({ 
+export default function BoardView({ 
     boardIndex, 
     todos, 
     onBack, 
-    setTodoBoards, 
-    todoBoardTitle,
+    setBoardViews, 
+    BoardViewTitle,
     onTitleChange }) {
 
     const [todoItems, setTodoItems] = useState(todos);
     const [todoValue, setTodoValue] = useState('');
     const [textareaHeight, setTextareaHeight] = useState('auto');
 
-    document.title = `${todoBoardTitle} [ ${todoItems.length} ]`;
+    document.title = `${BoardViewTitle} [ ${todoItems.length} ]`;
 
     useEffect(() => {
         setTodoItems(todos);
     }, [todos]);
 
     useEffect(() => {
-        setTodoBoards(prevBoards => {
+        setBoardViews(prevBoards => {
             const updatedBoards = [...prevBoards];
             updatedBoards[boardIndex] = {
                 ...updatedBoards[boardIndex],
@@ -29,7 +29,7 @@ export default function TodoBoard({
             };
             return updatedBoards;
         });
-    }, [todoItems, setTodoBoards, boardIndex]);
+    }, [todoItems, setBoardViews, boardIndex]);
 
     function responsiveTodo() {
         const todoTextElements = document.querySelectorAll('.todoItem p');
@@ -76,7 +76,7 @@ export default function TodoBoard({
             currentTime: Date.now()
         };
 
-        // Update in App's todoBoards
+        // Update in App's BoardViews
         setTodoItems([...todoItems, newTodo]);
         setTodoValue('');
         
@@ -107,7 +107,7 @@ export default function TodoBoard({
     }
 
     function handleDeleteTodo(index) {
-        // const newTodoList = 
+        // const newCardList = 
         // todos.filter((todo, todoIndex) => { return todoIndex !== index; });
         const updatedTodos = todoItems.filter((_, i) => i !== index);
         setTodoItems(updatedTodos);
@@ -153,10 +153,10 @@ export default function TodoBoard({
                 handleAddTodo={handleAddTodo}
                 getRandomColor={getRandomColor}
 
-                todoBoardTitle={todoBoardTitle}
+                BoardViewTitle={BoardViewTitle}
                 onTitleChange={onTitleChange}
             />
-            <TodoList
+            <CardList
                 moveTodoUp={moveTodoUp}
                 moveTodoDown={moveTodoDown}
                 handleEditTodo={handleEditTodo}

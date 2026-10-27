@@ -1,6 +1,6 @@
-import TodoCard from './TodoCard.jsx';
+import BoardCard from './BoardCard.jsx';
 
-export default function TodoList(props) {
+export default function CardList(props) {
 
     const { todos } = props;
 
@@ -8,9 +8,9 @@ export default function TodoList(props) {
         <ul className="main container">
             {todos.map((todo, todoIndex) => {
                 return (
-                    <TodoCard {...props} key={todoIndex} index={todoIndex} todo={todo}>
+                    <BoardCard {...props} key={todoIndex} index={todoIndex} todo={todo}>
                         <p>{todo.text}</p>
-                    </TodoCard>
+                    </BoardCard>
                 );
             })}
         </ul>

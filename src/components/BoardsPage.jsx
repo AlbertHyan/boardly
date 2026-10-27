@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useDebounce } from "../hooks/useDebounce.js";
 
-export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoards }) {
+export default function BoardViewsPage({ onSelectBoard, BoardViews, setBoardViews }) {
 
     // Modal useStates
     const [editIndex, setEditIndex] = useState(null); 
@@ -11,11 +11,11 @@ export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoard
     const [searchTerm, setSearchTerm] = useState("");
     const debouncedSearch = useDebounce(searchTerm, 400);
 
-    const boardsList = todoBoards.filter(board => 
+    const boardsList = BoardViews.filter(board => 
         board.title.toLowerCase().includes(debouncedSearch.toLowerCase())
     );
 
-    document.title = `Boards [ ${todoBoards.length} ] | Boardly`;
+    document.title = `Boards [ ${BoardViews.length} ] | Boardly`;
 
     function hslToHex(h, s, l) {
         s /= 100;
@@ -36,26 +36,26 @@ export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoard
         return hslToHex(randomNumber, 84, 44);
     }
 
-    function handleAddTodoBoard() {
+    function handleAddBoardView() {
         const newTodoBaord = {
-            title: `Board ${todoBoards.length + 1}`,
+            title: `Board ${BoardViews.length + 1}`,
             color: getRandomBoardColor(),  // color default by #76ce12
             todos: []
         }
 
-        setTodoBoards(prevTodoBoards => [...prevTodoBoards, newTodoBaord]);
+        setBoardViews(prevBoardViews => [...prevBoardViews, newTodoBaord]);
     }
 
-    function handleEditTodoBoard(index) {
+    function handleEditBoardView(index) {
         setEditIndex(index); 
-        setNewTitle(todoBoards[index].title); 
-        setNewColor(todoBoards[index].color || "#76ce12");
+        setNewTitle(BoardViews[index].title); 
+        setNewColor(BoardViews[index].color || "#76ce12");
     }
     function handleSaveEdit(index) { 
         if (newTitle && newTitle.length <= 42) { 
-            const updatedBoards = todoBoards.map((board, i) => i === index 
+            const updatedBoards = BoardViews.map((board, i) => i === index 
             ? { ...board, title: newTitle, color: newColor } : board); 
-            setTodoBoards(updatedBoards); 
+            setBoardViews(updatedBoards); 
             setEditIndex(null);
         } else { 
             alert("Title must be 42 characters or less."); 
@@ -65,9 +65,9 @@ export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoard
         setEditIndex(null);
     }
 
-    function handleDeleteTodoBoard(index) {
-        const newTodoBoards = todoBoards.filter((_, i) => i !== index);
-        setTodoBoards(newTodoBoards);
+    function handleDeleteBoardView(index) {
+        const newBoardViews = BoardViews.filter((_, i) => i !== index);
+        setBoardViews(newBoardViews);
     }
 
 
@@ -93,11 +93,11 @@ export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoard
         if (draggedBoardIndex === null || draggedBoardIndex === index) return;
 
         // Создаем новый порядок карточек после перетаскивания
-        const updatedBoards = [...todoBoards];
+        const updatedBoards = [...BoardViews];
         const draggedBoard = updatedBoards.splice(draggedBoardIndex, 1)[0];
         updatedBoards.splice(index, 0, draggedBoard);
 
-        setTodoBoards(updatedBoards);
+        setBoardViews(updatedBoards);
         setDraggedBoardIndex(null); // сброс индекса после перетаскивания
 
         setIsDragging(false); // Сброс состояния после перетаскивания
@@ -105,7 +105,7 @@ export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoard
 
     return (
         <main className="todo-boards-container">
-            <h2>Your Boards {todoBoards.length}</h2>
+            <h2>Your Boards {BoardViews.length}</h2>
 
             <input type="search" 
                 value={searchTerm}
@@ -134,11 +134,11 @@ export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoard
                                 {board.title || "No Title"}
                             </h3>
                             <button className="board-action-icon-left"
-                                onClick={() => { handleEditTodoBoard(boardIndex) }}>
+                                onClick={() => { handleEditBoardView(boardIndex) }}>
                                 <i className="fa-solid fa-pen-to-square"></i>
                             </button>
                             <button className="board-action-icon-right"
-                                onClick={() => { handleDeleteTodoBoard(boardIndex) }}>
+                                onClick={() => { handleDeleteBoardView(boardIndex) }}>
                                 <i className="fa-regular fa-trash-can"></i>
                             </button>
                         </div>
@@ -146,7 +146,7 @@ export default function TodoBoardsPage({ onSelectBoard, todoBoards, setTodoBoard
                 })}
 
                 <div className="board-card add-new-board-card"
-                    onClick={() => { handleAddTodoBoard() }}
+                    onClick={() => { handleAddBoardView() }}
                 >
                     <i className="fa-solid fa-plus"></i>
                 </div>
