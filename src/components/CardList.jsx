@@ -1,18 +1,22 @@
-import BoardCard from './BoardCard.jsx';
+import CardItem from './CardItem.jsx';
 
 export default function CardList(props) {
+  const { cards } = props;
 
-    const { todos } = props;
-
-    return (
-        <ul className="main container">
-            {todos.map((todo, todoIndex) => {
-                return (
-                    <BoardCard {...props} key={todoIndex} index={todoIndex} todo={todo}>
-                        <p>{todo.text}</p>
-                    </BoardCard>
-                );
-            })}
-        </ul>
-    );
+  return (
+    <ul className="main container">
+      {cards.map((card, cardIndex) => {
+        return (
+          <CardItem
+            {...props}
+            key={cardIndex}
+            index={cardIndex}
+            card={card}
+          >
+            <p>{card.text}</p>
+          </CardItem>
+        );
+      })}
+    </ul>
+  );
 }

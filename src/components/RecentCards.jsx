@@ -1,60 +1,73 @@
 import { useEffect } from "react";
 
 
-export default function RecentBoardCards(props) {
-    const { BoardViews } = props;
+export default function RecentCards(props) {
+  const { boards } = props;
 
-    // Flatten todos from all boards into a single array
-    const allTodos = BoardViews.reduce((acc, board) => {
-        return acc.concat(board.todos.map(todo => ({
-            ...todo
-        })));
-    }, []);
+  // Flatten cards from all boards into a single array
+  const allCards = boards.reduce((acc, board) => {
+    return acc.concat(board.todos.map(card => ({
+      ...card
+    })));
+  }, []);
 
-    // Sort todos by date in descending order
-    const sortedTodos = allTodos.sort((a, b) => b.currentTime - a.currentTime);
+  // Sort cards by date in descending order
+  const sortedCards = allCards.sort((a, b) => b.currentTime - a.currentTime);
 
-    // Take the top 10 most recent todos 
-    const recentTodos = sortedTodos.slice(0, 10);
+  // Take the top 10 most recent cards 
+  const recentCards = sortedCards.slice(0, 10);
 
-    function responsiveTodo() {
-        const todoBoxElements = document.querySelectorAll('.todoItem');
-        todoBoxElements.forEach(todoBoxElement => {
-            if (todoBoxElement.offsetHeight >= 72) {
-                todoBoxElement.querySelector('p').classList.add('long-text');
-            } else {
-                todoBoxElement.querySelector('p').classList.remove('long-text');
-            }
-        });
-    }
-    useEffect(() => {
-        responsiveTodo();
-    }, [recentTodos]);
+  function responsiveCards() {
+    const cardBoxElements = document.querySelectorAll('.todoItem');
 
-    return(
-        <main className="recent-todos-container">
-            <hr />
-            <h2>Recent Todos</h2>
+    cardBoxElements.forEach(cardBoxElement => {
+      const textElement = cardBoxElement.querySelector('p');
 
-            <ul className="main" style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-                {recentTodos.map((todo, index) => {
-                    return(
-                        <li className="todoItem" 
-                            key={index} 
-                            style={{ 
-                                backgroundColor: todo.color
-                            }}
-                        >
-                            <p>{todo.text}</p>
-                            <div className="wrapper">
-                                <span className="todoDate">
-                                    {todo.date}
-                                </span>
-                            </div>
-                        </li>
-                    );
-                })}
-            </ul>
-        </main>
-    );
+      if (!textElement) return;
+
+      if (cardBoxElement.offsetHeight >= 72) {
+        textElement.classList.add('long-text');
+      } else {
+        textElement.classList.remove('long-text');
+      }
+    });
+  }
+
+  useEffect(() => {
+    responsiveCards();
+  }, [recentCards]);
+
+  return (
+    <main className="recent-todos-container">
+      <hr />
+
+      <h2>Recent Cards</h2>
+
+      <ul className="main"
+        style={{
+          flexDirection: 'row',
+          flexWrap: 'wrap'
+        }}
+      >
+        {recentCards.map((card, index) => {
+          return (
+            <li className="todoItem"
+              key={index}
+              style={{
+                backgroundColor: card.color
+              }}
+            >
+              <p>{card.text}</p>
+
+              <div className="wrapper">
+                <span className="todoDate">
+                  {card.date}
+                </span>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </main>
+  );
 }
