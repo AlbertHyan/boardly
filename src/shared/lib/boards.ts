@@ -1,6 +1,14 @@
+import type { Board, BoardItem, NoteItem, Task, TaskListItem } from '@shared/types/board';
+
+
 const STORAGE_KEY = 'boardly:boards';
 
-function createId() {
+interface LegacyBoard extends Omit<Partial<Board>, 'items'> {
+  todos?: unknown[];
+  items?: unknown[];
+}
+
+function createId(): string {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
     return crypto.randomUUID();
   }
@@ -9,7 +17,7 @@ function createId() {
 }
 
 // Normalize task
-function normalizeTask(task) {
+function normalizeTask(task: unknown): Task {
   if (!task || typeof task !== 'object' || Array.isArray(task)) {
     return {
       id: createId(),
@@ -21,62 +29,76 @@ function normalizeTask(task) {
     };
   }
 
+  const source = task as Partial<Task>;
+
   return {
-    id: task.id || createId(),
-    text: typeof task.text === 'string' ? task.text : '',
-    color: typeof task.color === 'string' ? task.color : '#76ce1250',
-    date: typeof task.date === 'string' ? task.date : '',
+    id: source.id || createId(),
+    text: typeof source.text === 'string' ? source.text : '',
+    color: typeof source.color === 'string' ? source.color : '#76ce1250',
+    date: typeof source.date === 'string' ? source.date : '',
     currentTime:
-      typeof task.currentTime === 'number'
-        ? task.currentTime
+      typeof source.currentTime === 'number'
+        ? source.currentTime
         : Date.now(),
-    completed: typeof task.completed === 'boolean'
-      ? task.completed
+    completed: typeof source.completed === 'boolean'
+      ? source.completed
       : false,
   };
 }
 
 // Normalize board item
-function normalizeItem(item) {
+function normalizeItem(item: unknown): BoardItem | null {
   if (!item || typeof item !== 'object' || Array.isArray(item)) {
     return null;
   }
 
-  if (item.type === 'task-list') {
-    return {
-      id: typeof item.id === 'string' && item.id
-        ? item.id
+  const source = item as Record<string, unknown>;
+
+  if (source.type === 'task-list') {
+    const taskList: TaskListItem = {
+      id: typeof source.id === 'string' && source.id
+        ? source.id
         : createId(),
+
       type: 'task-list',
-      title: typeof item.title === 'string' && item.title.trim()
-        ? item.title
+
+      title: typeof source.title === 'string' && source.title.trim()
+        ? source.title
         : 'Untitled task list',
-      tasks: Array.isArray(item.tasks)
-        ? item.tasks.map(normalizeTask)
+
+      tasks: Array.isArray(source.tasks)
+        ? source.tasks.map(normalizeTask)
         : [],
     };
+
+    return taskList;
   }
 
-  if (item.type === 'note') {
-    return {
-      id: typeof item.id === 'string' && item.id
-        ? item.id
+  if (source.type === 'note') {
+    const note: NoteItem = {
+      id: typeof source.id === 'string' && source.id
+        ? source.id
         : createId(),
+
       type: 'note',
-      title: typeof item.title === 'string' && item.title.trim()
-        ? item.title
+
+      title: typeof source.title === 'string' && source.title.trim()
+        ? source.title
         : 'Untitled note',
-      content: typeof item.content === 'string'
-        ? item.content
+
+      content: typeof source.content === 'string'
+        ? source.content
         : '',
     };
+
+    return note;
   }
 
   return null;
 }
 
 // Migrate legacy todos
-function migrateLegacyTodos(board) {
+function migrateLegacyTodos(board: LegacyBoard): BoardItem[] {
   if (!Array.isArray(board.todos) || board.todos.length === 0) {
     return [];
   }
@@ -92,19 +114,19 @@ function migrateLegacyTodos(board) {
 }
 
 // Normalize boards
-export function normalizeBoards(boards) {
+export function normalizeBoards(boards: unknown): Board[] {
   if (!Array.isArray(boards)) {
     return [];
   }
 
   return boards
     .filter(
-      (board) =>
+      (board): board is LegacyBoard =>
         board !== null &&
         typeof board === 'object' &&
         !Array.isArray(board)
     )
-    .map((board) => {
+    .map((board): Board => {
       const sourceItems = Array.isArray(board.items)
         ? board.items
         : migrateLegacyTodos(board);
@@ -113,21 +135,25 @@ export function normalizeBoards(boards) {
         id: typeof board.id === 'string' && board.id
           ? board.id
           : createId(),
+
         title: typeof board.title === 'string' && board.title.trim()
           ? board.title
           : 'Untitled board',
+
         color: typeof board.color === 'string'
           ? board.color
           : '#76ce12',
+
         items: sourceItems
           .map(normalizeItem)
-          .filter((item) => item !== null),
+          .filter((item): item is BoardItem => item !== null),
       };
     });
 }
 
+
 // Load boards
-export function loadBoards(fallbackBoards) {
+export function loadBoards(fallbackBoards: Board[]): Board[] {
   try {
     const storedBoards = localStorage.getItem(STORAGE_KEY);
 
@@ -135,7 +161,7 @@ export function loadBoards(fallbackBoards) {
       return normalizeBoards(fallbackBoards);
     }
 
-    const parsedBoards = JSON.parse(storedBoards);
+    const parsedBoards: unknown = JSON.parse(storedBoards);
 
     if (!Array.isArray(parsedBoards)) {
       return normalizeBoards(fallbackBoards);
@@ -149,7 +175,7 @@ export function loadBoards(fallbackBoards) {
 }
 
 // Save boards
-export function saveBoards(boards) {
+export function saveBoards(boards: Board[]): boolean {
   try {
     localStorage.setItem(
       STORAGE_KEY,
@@ -164,7 +190,7 @@ export function saveBoards(boards) {
 }
 
 // Create board
-export function createBoard(title, color) {
+export function createBoard(title: string, color: string): Board {
   return {
     id: createId(),
     title,
@@ -174,7 +200,7 @@ export function createBoard(title, color) {
 }
 
 // Create task list
-export function createTaskList(title = 'Untitled task list') {
+export function createTaskList(title = 'Untitled task list'): TaskListItem {
   return {
     id: createId(),
     type: 'task-list',
@@ -184,7 +210,7 @@ export function createTaskList(title = 'Untitled task list') {
 }
 
 // Create note
-export function createNote(title = 'Untitled note') {
+export function createNote(title = 'Untitled note'): NoteItem {
   return {
     id: createId(),
     type: 'note',
