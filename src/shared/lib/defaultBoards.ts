@@ -1,4 +1,6 @@
-export const DEFAULT_BOARDS = [
+import type { Board } from '@shared/types/board';
+
+export const DEFAULT_BOARDS: Board[] = [
   {
     id: "board-product-launch",
     title: "Project “New Product Launch”",
@@ -42,6 +44,12 @@ export const DEFAULT_BOARDS = [
             completed: false,
           },
         ],
+        // todos: [
+        //   { text: "Conduct market research.", color: "#76ce1280", date: "01.11.26", currentTime: 1793491200000 },
+        //   { text: "Develop a prototype.", color: "#76ce1260", date: "02.11.26", currentTime: 1793577600000 },
+        //   { text: "Plan an advertising campaign.", color: "#76ce1240", date: "03.11.26", currentTime: 1793664000000 },
+        //   { text: "Prepare for the product presentation.", color: "#76ce1220", date: "04.11.26", currentTime: 1793750400000 },
+        // ]
       },
       {
         id: "note-product-launch",
