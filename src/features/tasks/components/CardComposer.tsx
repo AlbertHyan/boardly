@@ -1,5 +1,15 @@
 import { useState } from 'react';
 
+interface CardComposerProps {
+  handleAddCard: (color: string) => void;
+  cardValue: string;
+  setCardValue: (value: string) => void;
+  getRandomColor: () => string;
+  textareaHeight: string;
+  setTextareaHeight: (height: string) => void;
+}
+
+
 export default function CardComposer({
   handleAddCard,
   cardValue,
@@ -7,12 +17,12 @@ export default function CardComposer({
   getRandomColor,
   textareaHeight,
   setTextareaHeight
-}) {
+}: CardComposerProps) {
   const [randomColor] = useState(getRandomColor);
 
   const isButtonActive = cardValue.trim().length > 0;
 
-  const handleTextareaChange = (event) => {
+  const handleTextareaChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = event.target;
     const value = textarea.value;
 
@@ -20,7 +30,7 @@ export default function CardComposer({
     setTextareaHeight('auto');
     setTextareaHeight(`${textarea.scrollHeight}px`);
 
-    // responsive textarea
+    // resposnive textarea
     const header = document.querySelector('header');
 
     if (header instanceof HTMLElement) {
@@ -37,9 +47,9 @@ export default function CardComposer({
     handleAddCard(randomColor);
   };
 
-  const handleTextareaKeyDown = (event) => {
+  const handleTextareaKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key === 'Enter' && !event.shiftKey) {
-      event.preventDefault(); // Предотвращаем переход на новую строку
+      event.preventDefault();
       handleSubmit();
     }
   };
